@@ -1,0 +1,15 @@
+<h1 class="display-6 my-1">{{ title }}</h1>
+<ul class="list-group my-3">
+
+  <button
+    *ngFor="let categoryListItem of categoriesListItems"
+    [routerLink]="categoryListItem.value === null ? '/' : '/category/' + categoryListItem.value "    
+    class="list-group-item text-start"
+    [ngClass]="{ active : isSelectedCategory(categoryListItem.value) }"
+
+    
+  >
+    {{ categoryListItem.label }}
+  </button>
+</ul>
+<!--(click)="onSelectedCategory(categoryListItem.value)"-->
