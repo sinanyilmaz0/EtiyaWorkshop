@@ -12,6 +12,8 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductsComponent {
   productCardClass: string = 'card col-3 me-2 mb-2';
 
+  pagination: number = 2;
+
   products!: Products[];
 
   selectedProductCategoryId: number | null = null;
@@ -19,20 +21,24 @@ export class ProductsComponent {
 
   get filteredProducts(): any[] {
     let filteredProducts = this.products;
+    if (this.products == null) return [];
 
     if (this.selectedProductCategoryId)
-      filteredProducts = filteredProducts.filter(
+      filteredProducts = filteredProducts?.filter(
         (p) => p.categoryId === this.selectedProductCategoryId
       );
 
     if (this.searchProductNameInput)
-      filteredProducts = filteredProducts.filter((p) =>
+      filteredProducts = filteredProducts?.filter((p) =>
         p.name
           .toLowerCase()
           .includes(this.searchProductNameInput!.toLowerCase())
-      );  
+      );
     return filteredProducts;
   }
+
+  errorAlertMessage: string | null = null;
+  isLoading: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,17 +49,36 @@ export class ProductsComponent {
   ngOnInit(): void {
     this.getCategoryIdFromRoute();
     this.getSearchProductNameFromRoute();
-    this.getListProducts();
+    this.getProductsListWithPagination(1);
   }
 
-  getListProducts() {
-    this.productsService.getList().subscribe((response) => {
-      this.products = response;
-      document.getElementById('loading')!.style.display = 'none';
-    });
-  }
+  getProductsListWithPagination(page: number) {
+    
+    if (page === 1) {
+      this.pagination = 2;
+      page = 1;
+    } else this.pagination = page;
 
-  hideloader() {}
+    this.isLoading = this.isLoading + 1;
+
+    this.productsService
+      .getListWithPageination(page, this.selectedProductCategoryId)
+      .subscribe({
+        next: (response) => {
+          this.products = response;
+          this.isLoading = this.isLoading - 1;
+          
+        },
+        error: () => {
+          this.errorAlertMessage = "Server Error. Couldn't get products list.";
+          this.isLoading = this.isLoading - 1;
+        },
+        complete: () => {
+          console.log('completed');
+        },
+      });
+      
+  }
 
   getCategoryIdFromRoute(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -63,7 +88,7 @@ export class ProductsComponent {
     });
   }
 
-  isProductCardShow(product: any): boolean {
+  isProductCardShow(product: Products): boolean {
     return product.discontinued == false;
   }
 

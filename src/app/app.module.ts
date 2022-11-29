@@ -9,6 +9,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgModule } from '@angular/core';
 import { ProductsComponent } from './components/products/products.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ProductsComponent } from './components/products/products.component';
     CategoryListComponent,
     ProductsComponent,
     HomePageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

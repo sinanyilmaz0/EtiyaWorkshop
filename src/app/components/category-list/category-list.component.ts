@@ -46,6 +46,7 @@ export class CategoryListComponent implements OnInit{
   ngOnInit(): void {
     this.getSelectedCategoryIdFromRoute();
     this.getListCategories();
+    
   }
 
   getListCategories(){
