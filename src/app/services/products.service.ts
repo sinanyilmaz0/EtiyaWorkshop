@@ -12,6 +12,7 @@ import { enviroment } from 'src/environments/environment';
 export class ProductsService {
   controllerUrl:string = `${enviroment.apiUrl}/products`;
 
+  
   constructor(private httpClient:HttpClient) { }
 
 
@@ -19,7 +20,7 @@ export class ProductsService {
     if(selectedProductCategoryId == null){
       return this.httpClient.get<Products[]>(this.controllerUrl+"?_page="+pagination+"&_limit=9")
     }else{
-      return this.httpClient.get<Products[]>(enviroment.apiUrl+"/products?_page="+pagination+"&_limit=9&categoryId="+selectedProductCategoryId)
+      return this.httpClient.get<Products[]>(this.controllerUrl+"?_page="+pagination+"&_limit=9&categoryId="+selectedProductCategoryId);
     }
   }
 }

@@ -12,11 +12,12 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductsComponent {
   productCardClass: string = 'card col-3 me-2 mb-2';
 
-  pagination: number = 2;
+  pagination: number = 1;
 
   products!: Products[];
 
   selectedProductCategoryId: number | null = null;
+
   searchProductNameInput: string | null = null;
 
   get filteredProducts(): any[] {
@@ -34,6 +35,7 @@ export class ProductsComponent {
           .toLowerCase()
           .includes(this.searchProductNameInput!.toLowerCase())
       );
+      
     return filteredProducts;
   }
 
@@ -50,24 +52,23 @@ export class ProductsComponent {
     this.getCategoryIdFromRoute();
     this.getSearchProductNameFromRoute();
     this.getProductsListWithPagination(1);
+    
   }
 
   getProductsListWithPagination(page: number) {
     
     if (page === 1) {
-      this.pagination = 2;
+      this.pagination = 1;
       page = 1;
     } else this.pagination = page;
 
     this.isLoading = this.isLoading + 1;
-
     this.productsService
       .getListWithPageination(page, this.selectedProductCategoryId)
       .subscribe({
         next: (response) => {
           this.products = response;
           this.isLoading = this.isLoading - 1;
-          
         },
         error: () => {
           this.errorAlertMessage = "Server Error. Couldn't get products list.";
@@ -82,11 +83,15 @@ export class ProductsComponent {
 
   getCategoryIdFromRoute(): void {
     this.activatedRoute.params.subscribe((params) => {
-      if (params['categoryId'])
+      if (params['categoryId']){
         this.selectedProductCategoryId = parseInt(params['categoryId']);
-      else this.selectedProductCategoryId = null;
+        this.getProductsListWithPagination(1);
+      } else{
+        this.selectedProductCategoryId = null;
+      }
     });
   }
+
 
   isProductCardShow(product: Products): boolean {
     return product.discontinued == false;
