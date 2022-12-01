@@ -69,7 +69,8 @@ export class ProductsComponent {
         if (response.length < this.pagination.pageSize) {
           if (response.length === 0)
             this.pagination.page = this.pagination.page - 1;
-          this.lastPage = this.pagination.page;
+      
+          this.products = response
         }
 
         if (response.length > 0) this.products = response;
@@ -87,7 +88,7 @@ export class ProductsComponent {
 
   getCategoryIdFromRoute(): void {
     this.activatedRoute.params.subscribe((params) => {
-      this.pagination.page =1;
+      this.pagination.page = 1;
       if (params['categoryId']){
         this.filters["categoryId"] = parseInt(params['categoryId']);
       }else{
@@ -132,7 +133,6 @@ export class ProductsComponent {
     }else{
       if(this.filters["name_like"]) delete this.filters["name_like"];
     }
-      
 
     this.router.navigate([], {
       queryParams: queryParams,
@@ -143,6 +143,8 @@ export class ProductsComponent {
       pagination: this.pagination,
       filters: this.filters,
     })
+
+    this.pagination.page = 1;
   }
 
   changePage(page: number){
