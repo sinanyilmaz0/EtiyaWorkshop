@@ -32,12 +32,7 @@
   </ng-container>
 
   <ng-template #productsList>
-    <ng-template
-      ngFor
-      let-product
-      [ngForOf]="filteredProducts"
-      *ngIf="filteredProducts.length > 0; else noItems"
-    >
+    <ng-template ngFor let-product [ngForOf]="products">
       <div
         *ngIf="isProductCardShow(product); else productDiscontinued"
         [class]="productCardClass"
@@ -66,13 +61,29 @@
     <div class="alert alert-primary" role="alert">Ürün bulunamadı.</div>
   </ng-template>
   <div class="d-flex justify-content-center col-9">
-    <nav aria-label="Page navigation">
-      <ul class="pagination">
-        <ng-container *ngIf="(pagination - 1) != 0"><li class="page-item"><button class="page-link" (click)="getProductsListWithPagination(pagination - 1)">{{pagination - 1}}</button></li></ng-container>
-        <li class="page-item"><button class="btn btn-primary" (click)="getProductsListWithPagination(pagination)">{{pagination}}</button></li>
-        <ng-container *ngIf="products.length > 8"><li class="page-item"><button class="page-link" (click)="getProductsListWithPagination(pagination + 1)">{{pagination + 1}}</button></li></ng-container>
-      </ul>
-    </nav>
+
+   <nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [ngClass]="{ disabled: pagination.page == 1 }">
+      <button (click)="changePage(pagination.page - 1)" class="page-link">
+        Previous
+      </button>
+    </li>
+    <li class="page-item">
+      <button class="page-link">{{ pagination.page }}</button>
+    </li>
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: pagination.page === lastPage }"
+    >
+      <button (click)="changePage(pagination.page + 1)" class="page-link">
+        Next
+      </button>
+    </li>
+  </ul>
+</nav>
+
+    
     </div>
 
 </div>

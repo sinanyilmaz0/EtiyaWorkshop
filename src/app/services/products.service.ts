@@ -1,4 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
+import { GetListOptionsType } from './../models/get-list-options';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -16,11 +17,19 @@ export class ProductsService {
   constructor(private httpClient:HttpClient) { }
 
 
-  getListWithPageination(pagination:number, selectedProductCategoryId:number|null): Observable<Products[]>{
-    if(selectedProductCategoryId == null){
-      return this.httpClient.get<Products[]>(this.controllerUrl+"?_page="+pagination+"&_limit=9")
-    }else{
-      return this.httpClient.get<Products[]>(this.controllerUrl+"?_page="+pagination+"&_limit=9&categoryId="+selectedProductCategoryId);
+  getList(options?: GetListOptionsType): Observable<Products[]>{
+    let queryParams: any = {};
+
+    if(options?.pagination){
+      queryParams["_page"] = options.pagination.page;
+      queryParams["_limit"] = options.pagination.pageSize;
     }
+    if(options?.filters){
+      queryParams = {...queryParams, ...options.filters};
+    }
+
+    return this.httpClient.get<Products[]>(this.controllerUrl, {
+      params: queryParams,
+    })
   }
 }
