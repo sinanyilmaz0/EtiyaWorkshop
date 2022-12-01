@@ -3,13 +3,14 @@
 
   <button
     *ngFor="let categoryListItem of categoriesListItems"
-    [routerLink]="categoryListItem.value === null ? '/' : '/category/' + categoryListItem.value "    
+    (click) = "onSelectedCategory(categoryListItem.value)"
     class="list-group-item text-start"
     [ngClass]="{ active : isSelectedCategory(categoryListItem.value) }"
-
     
-  >
+    
+    >
     {{ categoryListItem.label }}
   </button>
 </ul>
 <!--(click)="onSelectedCategory(categoryListItem.value)"-->
+<!-- [routerLink]="categoryListItem.value === null ? '/' : '/category/' + categoryListItem.value "     -->

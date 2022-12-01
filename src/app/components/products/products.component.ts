@@ -19,7 +19,7 @@ export class ProductsComponent {
     page: 1,
     pageSize: 9,
   };
-  lastPage!: number;
+  lastPage?: number;
   filters: any = {};
 
   products!: Products[];
@@ -43,7 +43,7 @@ export class ProductsComponent {
   //         .toLowerCase()
   //         .includes(this.searchProductNameInput!.toLowerCase())
   //     );
-      
+
   //   return filteredProducts;
   // }
 
@@ -57,28 +57,27 @@ export class ProductsComponent {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = this.isLoading + 2;
     this.getCategoryIdFromRoute();
-    //this.getSearchProductNameFromRoute();    
+    this.getSearchProductNameFromRoute();
   }
 
   getProductsList(options?: GetListOptionsType): void {
     this.isLoading = this.isLoading + 1;
     this.productsService.getList(options).subscribe({
       next: (response) => {
-        
         if (response.length < this.pagination.pageSize) {
-          if (response.length === 0)
+          if (response.length === 0 && this.pagination.page > 1)
             this.pagination.page = this.pagination.page - 1;
-      
-          this.products = response
+          this.lastPage = this.pagination.page;
         }
 
-        if (response.length > 0) this.products = response;
-        this.isLoading = this.isLoading - 1;
+        this.products = response;
+        if(this.isLoading > 0)this.isLoading = this.isLoading - 1;
       },
       error: () => {
         this.errorAlertMessage = "Server Error. Couldn't get products list.";
-        this.isLoading = this.isLoading - 1;
+        if(this.isLoading > 0) this.isLoading = this.isLoading - 1;
       },
       complete: () => {
         console.log('completed');
@@ -87,71 +86,91 @@ export class ProductsComponent {
   }
 
   getCategoryIdFromRoute(): void {
+    
     this.activatedRoute.params.subscribe((params) => {
-      this.pagination.page = 1;
-      if (params['categoryId']){
-        this.filters["categoryId"] = parseInt(params['categoryId']);
-      }else{
-        if(this.filters["categoryId"]) delete this.filters["categoryId"];
+      this.resetPagination();
+
+      if (params['categoryId']) {
+        this.filters['categoryId'] = parseInt(params['categoryId']);
+      } else {
+        if (this.filters['categoryId']) delete this.filters['categoryId'];
       }
 
-      this.getProductsList({
-        pagination: this.pagination,
-        filters: this.filters,
-      })
+      if(this.isLoading > 0)this.isLoading = this.isLoading - 1;
+
+      if(this.isLoading === 0){
+        this.getProductsList({
+          pagination: this.pagination,
+          filters: this.filters,
+        });
+      }
     });
   }
-
 
   isProductCardShow(product: Products): boolean {
     return product.discontinued == false;
   }
 
   getSearchProductNameFromRoute(): void {
+  
     this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (
         queryParams['searchProductName'] &&
         queryParams['searchProductName'] !== this.searchProductNameInput
-      )
+      ) {
         this.searchProductNameInput = queryParams['searchProductName'];
+        this.filters['name_like'] = this.searchProductNameInput;
+      }
 
       if (
-        !queryParams['searchProductName'] &&
+        queryParams['searchProductName'] === undefined &&
         this.searchProductNameInput !== null
       ) {
         this.searchProductNameInput = null;
+        delete this.filters['name_like'];
+      }
+      this.isLoading = this.isLoading - 1;
+
+      if(this.isLoading === 0){
+        this.getProductsList({
+          pagination: this.pagination,
+          filters: this.filters,
+        });
       }
     });
   }
 
   onSearchProductNameChange(event: any): void {
-    
+
+    this.filters['name_like'] = this.searchProductNameInput;
+    this.resetPagination();
+
     const queryParams: any = {};
-    if (this.searchProductNameInput !== ''){
+    if (this.searchProductNameInput !== '') 
       queryParams['searchProductName'] = this.searchProductNameInput;
-      this.filters["name_like"] = this.searchProductNameInput;
-    }else{
-      if(this.filters["name_like"]) delete this.filters["name_like"];
-    }
+    
 
     this.router.navigate([], {
       queryParams: queryParams,
     });
 
-
+    
     this.getProductsList({
       pagination: this.pagination,
       filters: this.filters,
-    })
-
-    this.pagination.page = 1;
+    });
   }
 
-  changePage(page: number){
+  changePage(page: number) {
     this.pagination.page = page;
     this.getProductsList({
-      pagination : this.pagination,
+      pagination: this.pagination,
       filters: this.filters,
-    })
+    });
+  }
+
+  resetPagination(): void {
+    this.pagination.page = 1;
+    this.lastPage = undefined;
   }
 }
