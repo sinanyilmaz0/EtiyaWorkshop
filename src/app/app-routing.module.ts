@@ -1,5 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
 
+import { CategoryFormComponent } from './components/category-form/category-form.component';
+import { CategoryListComponent } from './components/category-list/category-list.component';
+import { CategoryListPageComponent } from './pages/category-list-page/category-list-page.component';
+import { DashboardCategoriesPageComponent } from './pages/dashboard-categories-page/dashboard-categories-page.component';
+import { DashboardProductsPageComponent } from './pages/dashboard-products-page/dashboard-products-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { NgModule } from '@angular/core';
@@ -10,18 +15,36 @@ const routes: Routes = [
   { path: 'category/:categoryId', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent },
   {
-    path: 'dashboard', //parent route
+    path: 'dashboard', // Grand Parent route
     children: [
       {
-        path: 'products',
+        path: 'products', // Parent route
         children: [
-          { path: 'add', component: ProductFormPageComponent },
+          {
+            path: '',
+            pathMatch: 'full',
+            component: DashboardProductsPageComponent,
+          },
+          { path: 'add', component: ProductFormPageComponent }, //= dashboard/products/add
           { path: 'edit/:productId', component: ProductFormPageComponent },
+        ],
+      },
+      {
+        path: 'categories', // Parent route
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: DashboardCategoriesPageComponent,
+          },
+          { path: 'add', component: CategoryListPageComponent }, 
+          { path: 'edit/:categoryId', component: CategoryListPageComponent },
         ],
       },
     ],
   },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -11,6 +11,8 @@ import { enviroment } from 'src/environments/environment';
 })
 
 export class ProductsService {
+  
+  
   controllerUrl:string = `${enviroment.apiUrl}/products`;
 
   
@@ -31,5 +33,23 @@ export class ProductsService {
     return this.httpClient.get<Products[]>(this.controllerUrl, {
       params: queryParams,
     })
+  }
+
+  getById(productId: number): Observable<Products>{
+    return this.httpClient.get<Products>(`${this.controllerUrl}/${productId}`)
+  }
+
+  add(request: Products): Observable<Products> {
+    return this.httpClient.post<Products>(this.controllerUrl, request);
+  }
+
+  update(request: Products): Observable<Products> {
+    return this.httpClient.put<Products>(`${this.controllerUrl}/${request.id}`, request);
+  }
+
+  delete(productId: number): Observable<Products> {
+    return this.httpClient.delete<Products>(
+      `${this.controllerUrl}/${productId}`
+    );
   }
 }

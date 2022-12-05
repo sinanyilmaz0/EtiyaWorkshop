@@ -5,50 +5,23 @@ import { GetListOptionsType } from 'src/app/models/get-list-options';
 import { Pagination } from 'src/app/models/pagination';
 import { Products } from 'src/app/models/product';
 import { ProductsService } from 'src/app/services/products.service';
-import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+  selector: 'app-dashboard-products-list-component',
+  templateUrl: './dashboard-products-list-component.component.html',
+  styleUrls: ['./dashboard-products-list-component.component.scss']
 })
-export class ProductsComponent {
-  productCardClass: string = 'card col-3 me-2 mb-2';
-
+export class DashboardProductsListComponentComponent {
+  products!: Products[];
+  errorAlertMessage: string | null = null;
+  isLoading: number = 0;
+  lastPage?: number;
+  filters: any = {};
   pagination: Pagination = {
     page: 1,
     pageSize: 9,
   };
-  lastPage?: number;
-  filters: any = {};
-
-  products!: Products[];
-
-  selectedProductCategoryId: number | null = null;
-
   searchProductNameInput: string | null = null;
-
-  // get filteredProducts(): any[] {
-  //   let filteredProducts = this.products;
-  //   if (this.products == null) return [];
-
-  //   if (this.selectedProductCategoryId)
-  //     filteredProducts = filteredProducts?.filter(
-  //       (p) => p.categoryId === this.selectedProductCategoryId
-  //     );
-
-  //   if (this.searchProductNameInput)
-  //     filteredProducts = filteredProducts?.filter((p) =>
-  //       p.name
-  //         .toLowerCase()
-  //         .includes(this.searchProductNameInput!.toLowerCase())
-  //     );
-
-  //   return filteredProducts;
-  // }
-
-  errorAlertMessage: string | null = null;
-  isLoading: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,8 +30,7 @@ export class ProductsComponent {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = this.isLoading + 2;
-    this.getCategoryIdFromRoute();
+    this.isLoading = this.isLoading + 1;
     this.getSearchProductNameFromRoute();
   }
 
@@ -81,36 +53,13 @@ export class ProductsComponent {
       },
       complete: () => {
         console.log('completed');
+        if(this.isLoading > 0)this.isLoading = this.isLoading - 1;
       },
     });
   }
 
-  getCategoryIdFromRoute(): void {
-    
-    this.activatedRoute.params.subscribe((params) => {
-      this.resetPagination();
 
-      if (params['categoryId']) {
-        this.filters['categoryId'] = parseInt(params['categoryId']);
-      } else {
-        if (this.filters['categoryId']) delete this.filters['categoryId'];
-      }
-
-      if(this.isLoading > 0)this.isLoading = this.isLoading - 1;
-
-      if(this.isLoading === 0){
-        this.getProductsList({
-          pagination: this.pagination,
-          filters: this.filters,
-        });
-      }
-    });
-  }
-
-  isProductCardShow(product: Products): boolean {
-    return product.discontinued == false;
-  }
-
+  
   getSearchProductNameFromRoute(): void {
   
     this.activatedRoute.queryParams.subscribe((queryParams) => {
@@ -161,6 +110,7 @@ export class ProductsComponent {
     });
   }
 
+
   changePage(page: number) {
     this.pagination.page = page;
     this.getProductsList({
@@ -172,12 +122,5 @@ export class ProductsComponent {
   resetPagination(): void {
     this.pagination.page = 1;
     this.lastPage = undefined;
-  }
-
-  addToCartClick(product: Products) {
-    console.log(
-      'ProductListComponentden sepete eklenmesi istenen ürün:',
-      product
-    );
   }
 }
