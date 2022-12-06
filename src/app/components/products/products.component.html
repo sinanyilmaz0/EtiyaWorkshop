@@ -15,37 +15,36 @@
   </div>
 </div>
 
-
 <div class="row">
-  <div class="col-12">
-    <h1 class="display-6">Filter</h1>
-  </div>
-  
   <div class="col-12 my-3">
+    <h2>Filter</h2>
+  </div>
+
+  <div class="col-6">
     <input
       type="text"
       class="form-control"
       id="filterProductPriceInput"
       placeholder="Price..."
-
-      [(ngModel)]="filterProductPriceInput"
+      [(ngModel)]="filters.productFilterPrice"
     />
-    <!--[value]="searchProductNameInput"-->
-    <form [formGroup]="filterForm" (change)="createProductForm($event)" >
-      <div class="col-3 my-3">
-        <select class="form-select" formControlName="filterPrice" id="filterInput">
-          <option [value]=0>Equal</option>
-          <option [value]=1>Greater Then</option>
-          <option [value]=2>less than</option>
-          <option [value]=3>greater than or equals to</option>
-          <option [value]=4>less than or equals to</option>
-        </select>
-      </div>
+  </div>
+  <div class="col-6">
+    <form [formGroup]="filterForm" (change)="createProductForm($event)">
+      <select
+        class="form-select"
+        formControlName="filterPrice"
+        id="filterInput"
+      >
+        <option [value]="0" selected>Equal</option>
+        <option [value]="1">Greater Then</option>
+        <option [value]="2">less than</option>
+        <option [value]="3">greater than or equals to</option>
+        <option [value]="4">less than or equals to</option>
+      </select>
     </form>
   </div>
-  
 </div>
-
 
 <ng-template #loadingSpinner>
   <div class="d-flex justify-content-center align-items-center h-100">
@@ -70,7 +69,14 @@
     </ng-container>
 
     <ng-template #showProductList>
-      <ng-template ngFor let-product [ngForOf]="products | filterProductByPrice :filterProductPriceInput: filterPrice">
+      <ng-template
+        ngFor
+        let-product
+        [ngForOf]="
+          products
+            | filterProductByPrice : filters.productFilterPrice : filterPrice
+        "
+      >
         <div
           *ngIf="isProductCardShow(product); else productDiscontinued"
           [class]="productCardClass"

@@ -21,7 +21,7 @@ export class ProductsComponent {
     pageSize: 9,
   };
   lastPage?: number;
-  filters: any = {};
+  filters: any = { productFilterPrice: 0 };
   filterPrice!:number;
   products!: Products[];
   pricefilter:number = 0;
