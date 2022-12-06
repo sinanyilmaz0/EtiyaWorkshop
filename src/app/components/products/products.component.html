@@ -27,13 +27,14 @@
       class="form-control"
       id="filterProductPriceInput"
       placeholder="Price..."
+
       [(ngModel)]="filterProductPriceInput"
     />
     <!--[value]="searchProductNameInput"-->
-    <form [formGroup]="filterForm" (change)="createProductForm($event)">
+    <form [formGroup]="filterForm" (change)="createProductForm($event)" >
       <div class="col-3 my-3">
         <select class="form-select" formControlName="filterPrice" id="filterInput">
-          <option selected [value]=0>Seçiniz</option>
+          <option [value]=0>Equal</option>
           <option [value]=1>Greater Then</option>
           <option [value]=2>less than</option>
           <option [value]=3>greater than or equals to</option>

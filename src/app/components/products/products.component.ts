@@ -165,6 +165,8 @@ export class ProductsComponent {
     });
   }
 
+
+
   changePage(page: number) {
     this.pagination.page = page;
     this.getProductsList({
