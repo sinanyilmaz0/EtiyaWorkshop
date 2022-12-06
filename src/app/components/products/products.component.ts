@@ -1,4 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Component } from '@angular/core';
 import { GetListOptionsType } from 'src/app/models/get-list-options';
@@ -21,12 +22,13 @@ export class ProductsComponent {
   };
   lastPage?: number;
   filters: any = {};
-
+  filterPrice!:number;
   products!: Products[];
-
+  pricefilter:number = 0;
   selectedProductCategoryId: number | null = null;
-
+  filterForm!: FormGroup;
   searchProductNameInput: string | null = null;
+  filterProductPriceInput: number | null = null;
 
   // get filteredProducts(): any[] {
   //   let filteredProducts = this.products;
@@ -53,13 +55,15 @@ export class ProductsComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private formBuilder: FormBuilder,
   ) {}
 
   ngOnInit(): void {
     this.isLoading = this.isLoading + 2;
     this.getCategoryIdFromRoute();
     this.getSearchProductNameFromRoute();
+  
   }
 
   getProductsList(options?: GetListOptionsType): void {
@@ -179,5 +183,10 @@ export class ProductsComponent {
       'ProductListComponentden sepete eklenmesi istenen ürün:',
       product
     );
+  }
+
+
+  createProductForm(event : Event): void {
+    this.filterPrice =Number((event.target as HTMLInputElement).value);
   }
 }

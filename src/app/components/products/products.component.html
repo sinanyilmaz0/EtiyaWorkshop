@@ -15,6 +15,37 @@
   </div>
 </div>
 
+
+<div class="row">
+  <div class="col-12">
+    <h1 class="display-6">Filter</h1>
+  </div>
+  
+  <div class="col-12 my-3">
+    <input
+      type="text"
+      class="form-control"
+      id="filterProductPriceInput"
+      placeholder="Price..."
+      [(ngModel)]="filterProductPriceInput"
+    />
+    <!--[value]="searchProductNameInput"-->
+    <form [formGroup]="filterForm" (change)="createProductForm($event)">
+      <div class="col-3 my-3">
+        <select class="form-select" formControlName="filterPrice" id="filterInput">
+          <option selected [value]=0>Seçiniz</option>
+          <option [value]=1>Greater Then</option>
+          <option [value]=2>less than</option>
+          <option [value]=3>greater than or equals to</option>
+          <option [value]=4>less than or equals to</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  
+</div>
+
+
 <ng-template #loadingSpinner>
   <div class="d-flex justify-content-center align-items-center h-100">
     <app-loading-spinner></app-loading-spinner>
@@ -38,7 +69,7 @@
     </ng-container>
 
     <ng-template #showProductList>
-      <ng-template ngFor let-product [ngForOf]="products">
+      <ng-template ngFor let-product [ngForOf]="products | filterProductByPrice :filterProductPriceInput: filterPrice">
         <div
           *ngIf="isProductCardShow(product); else productDiscontinued"
           [class]="productCardClass"

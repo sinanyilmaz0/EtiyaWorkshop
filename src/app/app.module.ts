@@ -22,6 +22,8 @@ import { ProductsComponent } from './components/products/products.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CategoryListPageComponent } from './pages/category-list-page/category-list-page.component';
 import { CategoryFormComponent } from './components/category-form/category-form.component';
+import { FilterProductPipe } from './pipes/filter-product.pipe';
+import { FilterProductByPricePipe } from './pipes/filter-product-by-price.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { CategoryFormComponent } from './components/category-form/category-form.
     ProductCardComponent,
     CategoryListPageComponent,
     CategoryFormComponent,
+    FilterProductPipe,
+    FilterProductByPricePipe,
   ],
   imports: [
     BrowserModule,
