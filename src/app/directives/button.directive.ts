@@ -26,5 +26,4 @@ export class ButtonDirective implements OnInit{
     this.el.nativeElement.classList.add("btn-dark");
     this.appButton = "btn-dark";
   }
-
 }
