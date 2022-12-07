@@ -30,11 +30,13 @@
     />
   </div>
   <div class="col-6">
-    <form [formGroup]="filterForm" (change)="createProductForm($event)">
+    <!--<form [formGroup]="filterForm" (change)="createProductForm($event)">-->
       <select
+        value="equal"
         class="form-select"
-        formControlName="filterPrice"
         id="filterInput"
+        [(ngModel)]="filterPrice"
+   
       >
         <option [value]="0" selected>Equal</option>
         <option [value]="1">Greater Then</option>
@@ -42,7 +44,7 @@
         <option [value]="3">greater than or equals to</option>
         <option [value]="4">less than or equals to</option>
       </select>
-    </form>
+   
   </div>
 </div>
 

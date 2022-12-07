@@ -53,7 +53,7 @@
               <th>{{ category.id }}</th>
               <td>{{ category.name }}</td>
               <td>{{ category.description }}</td>
-              <td>Düzenle</td>
+              <td><button type="button" class="btn btn-primary" [routerLink]="['edit', category.id]">Düzenle</button></td>
             </tr>
           </tbody>
         </ng-template>

@@ -22,7 +22,7 @@ export class ProductsComponent {
   };
   lastPage?: number;
   filters: any = { productFilterPrice: 0 };
-  filterPrice!:number;
+  filterPrice:number = 0;
   products!: Products[];
   pricefilter:number = 0;
   selectedProductCategoryId: number | null = null;
@@ -188,7 +188,11 @@ export class ProductsComponent {
   }
 
 
-  createProductForm(event : Event): void {
-    this.filterPrice =Number((event.target as HTMLInputElement).value);
-  }
+  // createProductForm(event : Event): void {
+  //   this.filterPrice =Number((event.target as HTMLInputElement).value);
+  // }
+
+  // filterPriceChange(){
+  //   console.log(this.filterPrice)
+  // }
 }
