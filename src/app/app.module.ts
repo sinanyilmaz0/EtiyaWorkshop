@@ -17,6 +17,7 @@ import { FilterProductPipe } from './pipes/filter-product.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { HttpClientModule } from "@angular/common/http";
+import { IfNotDirective } from './directives/if-not.directive';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -26,6 +27,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
 import { ProductFormPageComponent } from './pages/product-form-page/product-form-page.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ToastrModule } from 'ngx-toastr';
+import { UnlessDirective } from './directives/unless.directive';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { ToastrModule } from 'ngx-toastr';
     FilterProductByPricePipe,
     HighlightDirective,
     ButtonDirective,
+    IfNotDirective,
+    UnlessDirective,
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,11 @@ export class ProductCardComponent {
   @Input() product!:Products;
   @Output() onAddToCartClick = new EventEmitter<Products>();
 
+  condition = false;
+  showInput = false
+  show = false;
+
   addToCartClick() {
     this.onAddToCartClick.emit(this.product);
   }
-
 }

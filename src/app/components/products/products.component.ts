@@ -1,11 +1,16 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { CategoriesService } from 'src/app/services/categories.service';
+import { Category } from 'src/app/models/category';
 import { Component } from '@angular/core';
+import { Filters } from 'src/app/models/filters';
 import { GetListOptionsType } from 'src/app/models/get-list-options';
 import { Pagination } from 'src/app/models/pagination';
 import { Products } from 'src/app/models/product';
 import { ProductsService } from 'src/app/services/products.service';
+import { Supplier } from 'src/app/models/supplier';
+import { SupplierServiceService } from 'src/app/services/supplier-service.service';
 import { filter } from 'rxjs';
 
 @Component({
@@ -20,34 +25,33 @@ export class ProductsComponent {
     page: 1,
     pageSize: 9,
   };
+
   lastPage?: number;
-  filters: any = { productFilterPrice: 0 };
-  filterPrice:number = 0;
+  filters: any = {
+    productFilterPrice: 0,
+  };
+
+  productFilter: Filters = {
+    searchProductName: '',
+    productFilterPrice: 0,
+    productPrice: 0,
+    discontinued: false,
+    supplierId : 0,
+  };
+
+  log() {
+    console.log(this.productFilter);
+  }
+
+  filterPrice: number = 0;
   products!: Products[];
-  pricefilter:number = 0;
+
   selectedProductCategoryId: number | null = null;
   filterForm!: FormGroup;
   searchProductNameInput: string | null = null;
   filterProductPriceInput: number | null = null;
 
-  // get filteredProducts(): any[] {
-  //   let filteredProducts = this.products;
-  //   if (this.products == null) return [];
-
-  //   if (this.selectedProductCategoryId)
-  //     filteredProducts = filteredProducts?.filter(
-  //       (p) => p.categoryId === this.selectedProductCategoryId
-  //     );
-
-  //   if (this.searchProductNameInput)
-  //     filteredProducts = filteredProducts?.filter((p) =>
-  //       p.name
-  //         .toLowerCase()
-  //         .includes(this.searchProductNameInput!.toLowerCase())
-  //     );
-
-  //   return filteredProducts;
-  // }
+  suppliers: Supplier[] = [];
 
   errorAlertMessage: string | null = null;
   isLoading: number = 0;
@@ -56,14 +60,20 @@ export class ProductsComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private productsService: ProductsService,
-    private formBuilder: FormBuilder,
+    private categoriesService: CategoriesService,
+    private supliersService: SupplierServiceService
   ) {}
 
   ngOnInit(): void {
     this.isLoading = this.isLoading + 2;
     this.getCategoryIdFromRoute();
-    this.getSearchProductNameFromRoute();
-  
+    this.getSearchProductNameFromRoute(), this.getSuppliers();
+  }
+
+  getSuppliers(): void {
+    this.supliersService.getList().subscribe((response: Supplier[]) => {
+      this.suppliers = response;
+    });
   }
 
   getProductsList(options?: GetListOptionsType): void {
@@ -77,11 +87,11 @@ export class ProductsComponent {
         }
 
         this.products = response;
-        if(this.isLoading > 0)this.isLoading = this.isLoading - 1;
+        if (this.isLoading > 0) this.isLoading = this.isLoading - 1;
       },
       error: () => {
         this.errorAlertMessage = "Server Error. Couldn't get products list.";
-        if(this.isLoading > 0) this.isLoading = this.isLoading - 1;
+        if (this.isLoading > 0) this.isLoading = this.isLoading - 1;
       },
       complete: () => {
         console.log('completed');
@@ -90,7 +100,6 @@ export class ProductsComponent {
   }
 
   getCategoryIdFromRoute(): void {
-    
     this.activatedRoute.params.subscribe((params) => {
       this.resetPagination();
 
@@ -100,9 +109,9 @@ export class ProductsComponent {
         if (this.filters['categoryId']) delete this.filters['categoryId'];
       }
 
-      if(this.isLoading > 0)this.isLoading = this.isLoading - 1;
+      if (this.isLoading > 0) this.isLoading = this.isLoading - 1;
 
-      if(this.isLoading === 0){
+      if (this.isLoading === 0) {
         this.getProductsList({
           pagination: this.pagination,
           filters: this.filters,
@@ -116,7 +125,6 @@ export class ProductsComponent {
   }
 
   getSearchProductNameFromRoute(): void {
-  
     this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (
         queryParams['searchProductName'] &&
@@ -135,7 +143,7 @@ export class ProductsComponent {
       }
       this.isLoading = this.isLoading - 1;
 
-      if(this.isLoading === 0){
+      if (this.isLoading === 0) {
         this.getProductsList({
           pagination: this.pagination,
           filters: this.filters,
@@ -145,27 +153,22 @@ export class ProductsComponent {
   }
 
   onSearchProductNameChange(event: any): void {
-
     this.filters['name_like'] = this.searchProductNameInput;
     this.resetPagination();
 
     const queryParams: any = {};
-    if (this.searchProductNameInput !== '') 
+    if (this.searchProductNameInput !== '')
       queryParams['searchProductName'] = this.searchProductNameInput;
-    
 
     this.router.navigate([], {
       queryParams: queryParams,
     });
 
-    
     this.getProductsList({
       pagination: this.pagination,
       filters: this.filters,
     });
   }
-
-
 
   changePage(page: number) {
     this.pagination.page = page;
@@ -186,13 +189,31 @@ export class ProductsComponent {
       product
     );
   }
-
-
-  // createProductForm(event : Event): void {
-  //   this.filterPrice =Number((event.target as HTMLInputElement).value);
-  // }
-
-  // filterPriceChange(){
-  //   console.log(this.filterPrice)
-  // }
 }
+
+// get filteredProducts(): any[] {
+//   let filteredProducts = this.products;
+//   if (this.products == null) return [];
+
+//   if (this.selectedProductCategoryId)
+//     filteredProducts = filteredProducts?.filter(
+//       (p) => p.categoryId === this.selectedProductCategoryId
+//     );
+
+//   if (this.searchProductNameInput)
+//     filteredProducts = filteredProducts?.filter((p) =>
+//       p.name
+//         .toLowerCase()
+//         .includes(this.searchProductNameInput!.toLowerCase())
+//     );
+
+//   return filteredProducts;
+// }
+
+// createProductForm(event : Event): void {
+//   this.filterPrice =Number((event.target as HTMLInputElement).value);
+// }
+
+// filterPriceChange(){
+//   console.log(this.filterPrice)
+// }
