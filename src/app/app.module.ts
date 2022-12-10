@@ -1,4 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +17,7 @@ import { FilterProductByPricePipe } from './pipes/filter-product-by-price.pipe';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpInterceptor } from './interceptors/http.interceptor';
 import { IfNotDirective } from './directives/if-not.directive';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
@@ -63,7 +64,9 @@ import { UnlessDirective } from './directives/unless.directive';
     BrowserAnimationsModule,
     ToastrModule.forRoot(), 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -94,7 +94,7 @@ export class ProductsComponent {
         if (this.isLoading > 0) this.isLoading = this.isLoading - 1;
       },
       complete: () => {
-        console.log('completed');
+        
       },
     });
   }
