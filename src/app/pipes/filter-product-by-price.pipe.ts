@@ -23,7 +23,7 @@ export class FilterProductByPricePipe implements PipeTransform {
       );
     }
 
-    if (price != 0) {
+    if (price > 0) {
       filteredProducts = filteredProducts.filter((p) =>
         filterprice == 0
           ? p.unitPrice == price
@@ -43,7 +43,7 @@ export class FilterProductByPricePipe implements PipeTransform {
       filteredProducts = filteredProducts.filter((p) => p.discontinued == false);
     }
 
-    if (supplierId != 0) {
+    if (supplierId > 0) {
       filteredProducts = filteredProducts.filter((p) => p.supplierId == supplierId);
     }
 

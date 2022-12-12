@@ -39,9 +39,6 @@ export class ProductsComponent {
     supplierId : 0,
   };
 
-  log() {
-    console.log(this.productFilter);
-  }
 
   filterPrice: number = 0;
   products!: Products[];

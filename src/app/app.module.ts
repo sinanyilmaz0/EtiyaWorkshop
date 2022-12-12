@@ -19,6 +19,7 @@ import { HighlightDirective } from './directives/highlight.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { HttpInterceptor } from './interceptors/http.interceptor';
 import { IfNotDirective } from './directives/if-not.directive';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -29,6 +30,7 @@ import { ProductFormPageComponent } from './pages/product-form-page/product-form
 import { ProductsComponent } from './components/products/products.component';
 import { ToastrModule } from 'ngx-toastr';
 import { UnlessDirective } from './directives/unless.directive';
+import { OverlayLoadingComponent } from './components/overlay-loading/overlay-loading.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { UnlessDirective } from './directives/unless.directive';
     ButtonDirective,
     IfNotDirective,
     UnlessDirective,
+    OverlayLoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { UnlessDirective } from './directives/unless.directive';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
