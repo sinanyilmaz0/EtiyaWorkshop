@@ -1,4 +1,4 @@
-import { CategoriesService } from 'src/app/features/services/categories.service';
+import { CategoriesService } from 'src/app/features/category/services/categories.service';
 import { Component } from '@angular/core';
 
 @Component({

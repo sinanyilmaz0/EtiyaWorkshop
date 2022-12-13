@@ -1,9 +1,9 @@
 import { ActivatedRoute } from '@angular/router';
-import { GetListOptionsType } from '../../shared/models/get-list-options';
+import { GetListOptionsType } from '../../../shared/models/get-list-options';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Products } from '../../shared/models/product';
+import { Products } from '../../../shared/models/product';
 import { enviroment } from 'src/environments/environment';
 
 @Injectable({

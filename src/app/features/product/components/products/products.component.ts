@@ -1,16 +1,16 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CategoriesService } from 'src/app/features/services/categories.service';
+import { CategoriesService } from 'src/app/features/category/services/categories.service';
 import { Category } from 'src/app/shared/models/category';
 import { Component } from '@angular/core';
 import { Filters } from 'src/app/shared/models/filters';
 import { GetListOptionsType } from 'src/app/shared/models/get-list-options';
 import { Pagination } from 'src/app/shared/models/pagination';
 import { Products } from 'src/app/shared/models/product';
-import { ProductsService } from 'src/app/features/services/products.service';
+import { ProductsService } from 'src/app/features/product/services/products.service';
 import { Supplier } from 'src/app/shared/models/supplier';
-import { SupplierServiceService } from 'src/app/features/services/supplier-service.service';
+import { SupplierServiceService } from 'src/app/shared/services/supplier-service.service';
 import { filter } from 'rxjs';
 
 @Component({

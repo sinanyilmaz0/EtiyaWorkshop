@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { GetListOptionsType } from 'src/app/shared/models/get-list-options';
 import { Pagination } from 'src/app/shared/models/pagination';
 import { Products } from 'src/app/shared/models/product';
-import { ProductsService } from 'src/app/features/services/products.service';
+import { ProductsService } from 'src/app/features/product/services/products.service';
 
 @Component({
   selector: 'app-dashboard-products-list-component',

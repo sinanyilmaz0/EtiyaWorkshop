@@ -1,5 +1,5 @@
-import { Category } from '../../shared/models/category';
-import { GetListOptionsType } from '../../shared/models/get-list-options';
+import { Category } from '../../../shared/models/category';
+import { GetListOptionsType } from '../../../shared/models/get-list-options';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

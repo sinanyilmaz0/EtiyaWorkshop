@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CategoriesService } from 'src/app/features/services/categories.service';
+import { CategoriesService } from 'src/app/features/category/services/categories.service';
 import { Category } from 'src/app/shared/models/category';
 import { ToastrService } from 'ngx-toastr';
 

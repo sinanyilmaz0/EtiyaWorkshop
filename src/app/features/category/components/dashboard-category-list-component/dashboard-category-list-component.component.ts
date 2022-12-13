@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CategoriesService } from 'src/app/features/services/categories.service';
+import { CategoriesService } from 'src/app/features/category/services/categories.service';
 import { Category } from 'src/app/shared/models/category';
 import { Component } from '@angular/core';
 import { GetListOptionsType } from 'src/app/shared/models/get-list-options';
