@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CategoryListPageComponent } from './features/category/pages/category-list-page/category-list-page.component';
 import { CoreModule } from './core/core.module';
 import { FilterProductPipe } from './shared/pipes/filter-product.pipe';
-import { HomePageComponent } from './pages/home-page/home-page.component';
+import { HomePageComponent } from './shared/pages/home-page/home-page.component';
 import { HttpInterceptor } from './shared/interceptors/http.interceptor';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { NgModule } from '@angular/core';
