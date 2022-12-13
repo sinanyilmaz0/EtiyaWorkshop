@@ -12,7 +12,6 @@ export class AppComponent implements OnInit {
 
   isLoading: boolean = false;
   isLoadingText!: string;
-  // Loading.service'den çekip,değerini değiştirmek istiyorum.
   ngOnInit(): void {
     this.subscribeToLoading();
     this.subscribeToLoadingText();

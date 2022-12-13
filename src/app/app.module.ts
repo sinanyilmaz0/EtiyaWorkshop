@@ -3,6 +3,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthorizantionInterceptor } from './interceptors/authorizantion.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonDirective } from './directives/button.directive';
@@ -24,13 +25,13 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgModule } from '@angular/core';
+import { OverlayLoadingComponent } from './components/overlay-loading/overlay-loading.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { ProductFormPageComponent } from './pages/product-form-page/product-form-page.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ToastrModule } from 'ngx-toastr';
 import { UnlessDirective } from './directives/unless.directive';
-import { OverlayLoadingComponent } from './components/overlay-loading/overlay-loading.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { OverlayLoadingComponent } from './components/overlay-loading/overlay-lo
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizantionInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
