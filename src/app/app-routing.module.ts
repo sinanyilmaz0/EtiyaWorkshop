@@ -1,14 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { CategoryFormComponent } from './components/category-form/category-form.component';
-import { CategoryListComponent } from './components/category-list/category-list.component';
-import { CategoryListPageComponent } from './pages/category-list-page/category-list-page.component';
-import { DashboardCategoriesPageComponent } from './pages/dashboard-categories-page/dashboard-categories-page.component';
-import { DashboardProductsPageComponent } from './pages/dashboard-products-page/dashboard-products-page.component';
+import { CategoryFormComponent } from './features/category/components/category-form/category-form.component';
+import { CategoryListComponent } from './features/category/components/category-list/category-list.component';
+import { CategoryListPageComponent } from './features/pages/category-list-page/category-list-page.component';
+import { DashboardCategoriesPageComponent } from './features/pages/dashboard-categories-page/dashboard-categories-page.component';
+import { DashboardProductsPageComponent } from './features/pages/dashboard-products-page/dashboard-products-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { NgModule } from '@angular/core';
-import { ProductFormPageComponent } from './pages/product-form-page/product-form-page.component';
+import { ProductFormPageComponent } from './features/pages/product-form-page/product-form-page.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomePageComponent },

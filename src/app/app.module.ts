@@ -1,63 +1,34 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthorizantionInterceptor } from './interceptors/authorizantion.interceptor';
+import { AuthorizantionInterceptor } from './shared/interceptors/authorizantion.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { ButtonDirective } from './directives/button.directive';
-import { CategoryFormComponent } from './components/category-form/category-form.component';
-import { CategoryListComponent } from './components/category-list/category-list.component';
-import { CategoryListPageComponent } from './pages/category-list-page/category-list-page.component';
-import { DashboardCategoriesPageComponent } from './pages/dashboard-categories-page/dashboard-categories-page.component';
-import { DashboardCategoryListComponentComponent } from './components/dashboard-category-list-component/dashboard-category-list-component.component';
-import { DashboardProductsListComponentComponent } from './components/dashboard-products-list-component/dashboard-products-list-component.component';
-import { DashboardProductsPageComponent } from './pages/dashboard-products-page/dashboard-products-page.component';
-import { FilterProductByPricePipe } from './pipes/filter-product-by-price.pipe';
-import { FilterProductPipe } from './pipes/filter-product.pipe';
-import { HighlightDirective } from './directives/highlight.directive';
+
+import { CategoryListPageComponent } from './features/pages/category-list-page/category-list-page.component';
+import { CoreModule } from './core/core.module';
+import { FilterProductPipe } from './shared/pipes/filter-product.pipe';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { HttpInterceptor } from './interceptors/http.interceptor';
-import { IfNotDirective } from './directives/if-not.directive';
-import { LoadingInterceptor } from './interceptors/loading.interceptor';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { HttpInterceptor } from './shared/interceptors/http.interceptor';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { NgModule } from '@angular/core';
-import { OverlayLoadingComponent } from './components/overlay-loading/overlay-loading.component';
-import { ProductCardComponent } from './components/product-card/product-card.component';
-import { ProductFormComponent } from './components/product-form/product-form.component';
-import { ProductFormPageComponent } from './pages/product-form-page/product-form-page.component';
-import { ProductsComponent } from './components/products/products.component';
+import { ProductFormComponent } from './features/product/product-form/product-form.component';
+import { ProductFormPageComponent } from './features/pages/product-form-page/product-form-page.component';
+import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
-import { UnlessDirective } from './directives/unless.directive';
+import { ProductModule } from './features/product/product.module';
+import { CategoryModule } from './features/category/category.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    CategoryListComponent,
-    ProductsComponent,
     HomePageComponent,
-    LoginPageComponent,
-    LoadingSpinnerComponent,
     ProductFormComponent,
     ProductFormPageComponent,
-    DashboardProductsPageComponent,
-    DashboardProductsListComponentComponent,
-    DashboardCategoriesPageComponent,
-    DashboardCategoryListComponentComponent,
-    ProductCardComponent,
     CategoryListPageComponent,
-    CategoryFormComponent,
     FilterProductPipe,
-    FilterProductByPricePipe,
-    HighlightDirective,
-    ButtonDirective,
-    IfNotDirective,
-    UnlessDirective,
-    OverlayLoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,13 +37,21 @@ import { UnlessDirective } from './directives/unless.directive';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(), 
+    ToastrModule.forRoot(),
+    SharedModule,
+    CoreModule,
+    ProductModule,
+    CategoryModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizantionInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizantionInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
