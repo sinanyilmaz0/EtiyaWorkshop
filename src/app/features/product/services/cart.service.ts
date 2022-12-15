@@ -1,4 +1,3 @@
-import { Cart } from '../models/cart';
 import { GetListOptionsType } from 'src/app/shared/models/get-list-options';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -22,5 +21,9 @@ export class CartService {
 
   getList(options?: GetListOptionsType): Observable<Products[]>{
     return this.httpClient.get<Products[]>(this.controllerUrl)
+  }
+
+  delete(productId:number): Observable<Products> {
+    return this.httpClient.delete<Products>(`${this.controllerUrl}/${productId}`);
   }
 }

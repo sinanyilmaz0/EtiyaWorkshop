@@ -15,7 +15,14 @@
           <tr>
             <td>{{ product.name }}</td>
             <td>{{ product.unitPrice | currency : "₺" }}</td>
-            <td><button class="btn btn-danger">Delete</button></td>
+            <td>
+              <button
+                class="btn btn-danger"
+                (click)="deleteProductFromCard(product.id)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         </ng-template>
       </tbody>

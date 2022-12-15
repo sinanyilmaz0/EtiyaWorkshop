@@ -1,7 +1,9 @@
+import { AppComponent } from 'src/app/app.component';
 import { CartService } from 'src/app/features/product/services/cart.service';
 import { Component } from '@angular/core';
 import { GetListOptionsType } from 'src/app/shared/models/get-list-options';
 import { Products } from 'src/app/shared/models/product';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -11,9 +13,15 @@ import { Products } from 'src/app/shared/models/product';
 export class CartComponent {
   products!: Products[];
   isLoading: number = 0;
-  total: number = 0;
+  total: number = 0.00;
+  quantity: number = 1;
+  value = 1;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private toastrService: ToastrService,
+    private appComponent: AppComponent
+  ) {}
 
   ngOnInit(): void {
     //this.isLoading = this.isLoading + 2;
@@ -38,8 +46,23 @@ export class CartComponent {
   }
 
   findTotal(): void {
+    this.total = 0;
     this.products.forEach((product) => {
       this.total = this.total + product.unitPrice;
     });
   }
+
+  deleteProductFromCard(id: number) {
+    if (confirm('Are you sure you want to delete this product?') === false)
+      return;
+
+    this.cartService.delete(id).subscribe(() => {
+      this.toastrService.success('Product deleted successfully');
+    });
+    this.getCartList();
+    this.appComponent.subscribeToCartText();
+    this.findTotal();
+  }
+
+  
 }

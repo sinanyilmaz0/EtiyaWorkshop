@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { CartService } from './features/product/services/cart.service';
 import { LoadingService } from './shared/services/loading.service';
 
 @Component({
@@ -8,13 +9,15 @@ import { LoadingService } from './shared/services/loading.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService, private cartService: CartService) {}
 
   isLoading: boolean = false;
+  cartText!: number;
   isLoadingText!: string;
   ngOnInit(): void {
     this.subscribeToLoading();
     this.subscribeToLoadingText();
+    this.subscribeToCartText();
   }
 
   subscribeToLoading() {
@@ -27,5 +30,11 @@ export class AppComponent implements OnInit {
     this.loadingService.text.subscribe((isLoadingText)=>{
       this.isLoadingText = isLoadingText;
     })
+  }
+
+  subscribeToCartText(){
+    this.cartService.getList().subscribe((response) => {
+      this.cartText = response.length;
+    });
   }
 }
