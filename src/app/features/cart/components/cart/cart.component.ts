@@ -59,9 +59,10 @@ export class CartComponent {
     this.cartService.delete(id).subscribe(() => {
       this.toastrService.success('Product deleted successfully');
     });
-    this.getCartList();
+    
     this.appComponent.subscribeToCartText();
     this.findTotal();
+    this.getCartList();
   }
 
   
