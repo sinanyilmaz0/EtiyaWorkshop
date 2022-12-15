@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { CartService } from '../../services/cart.service';
 import { Products } from 'src/app/shared/models/product';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-card',
@@ -14,8 +16,15 @@ export class ProductCardComponent {
   condition = false;
   showInput = false
   show = false;
+  
+  constructor(private toastrService: ToastrService, private cartService: CartService){
+
+  }
 
   addToCartClick() {
-    this.onAddToCartClick.emit(this.product);
+    this.cartService.add(this.product).subscribe((response) => {
+      this.toastrService.success('Product added successfully');
+    });
+    //this.onAddToCartClick.emit(this.product);
   }
 }

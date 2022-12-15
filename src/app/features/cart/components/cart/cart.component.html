@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <div class="row">
+    <h1 class="display-6">Cart</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template ngFor let-product [ngForOf]="products">
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.unitPrice | currency : "₺" }}</td>
+            <td><button class="btn btn-danger">Delete</button></td>
+          </tr>
+        </ng-template>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="col">Toplam</th>
+          <th scope="col">{{ total | currency : "₺" }}</th>
+          <th scope="col"></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
