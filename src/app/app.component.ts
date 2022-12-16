@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CartService } from './features/product/services/cart.service';
-import { LoadingService } from './shared/services/loading.service';
+import { LoadingService } from './core/services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +12,10 @@ export class AppComponent implements OnInit {
   constructor(private loadingService: LoadingService, private cartService: CartService) {}
 
   isLoading: boolean = false;
-  cartText!: number;
   isLoadingText!: string;
   ngOnInit(): void {
     this.subscribeToLoading();
     this.subscribeToLoadingText();
-    this.subscribeToCartText();
   }
 
   subscribeToLoading() {
@@ -32,9 +30,5 @@ export class AppComponent implements OnInit {
     })
   }
 
-  subscribeToCartText(){
-    this.cartService.getList().subscribe((response) => {
-      this.cartText = response.length;
-    });
-  }
+  
 }

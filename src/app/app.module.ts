@@ -10,10 +10,9 @@ import { CartModule } from './features/cart/cart.module';
 import { CategoryListPageComponent } from './features/category/pages/category-list-page/category-list-page.component';
 import { CategoryModule } from './features/category/category.module';
 import { CoreModule } from './core/core.module';
-import { FilterProductPipe } from './shared/pipes/filter-product.pipe';
-import { HomePageComponent } from './shared/pages/home-page/home-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { HttpInterceptor } from './shared/interceptors/http.interceptor';
-import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { ProductFormComponent } from './features/product/components/product-form/product-form.component';
@@ -23,14 +22,7 @@ import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomePageComponent,
-    ProductFormComponent,
-    ProductFormPageComponent,
-    CategoryListPageComponent,
-    FilterProductPipe,
-  ],
+  declarations: [AppComponent, HomePageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -44,7 +36,6 @@ import { ToastrModule } from 'ngx-toastr';
     ProductModule,
     CategoryModule,
     CartModule,
-    MatIconModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptor, multi: true },

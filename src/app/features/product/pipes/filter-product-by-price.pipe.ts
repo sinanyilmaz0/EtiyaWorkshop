@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Filters } from '../models/filters';
-import { Products } from '../models/product';
+import { Filters } from '../../../shared/models/filters';
+import { Products } from '../../../shared/models/product';
 
 @Pipe({
   name: 'filterProductByPrice',

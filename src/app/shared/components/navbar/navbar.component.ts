@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit{
       this.numberOfProductInCard = response.length;
     });
   }
+  
 
   navItems : any[] = [
     {
