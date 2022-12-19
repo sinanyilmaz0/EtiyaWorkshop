@@ -19,6 +19,7 @@ import { ProductFormComponent } from './features/product/components/product-form
 import { ProductFormPageComponent } from './features/product/pages/product-form-page/product-form-page.component';
 import { ProductModule } from './features/product/product.module';
 import { SharedModule } from './shared/shared.module';
+import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({

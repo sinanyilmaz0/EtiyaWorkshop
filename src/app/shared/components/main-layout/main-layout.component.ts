@@ -1,25 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CartService } from 'src/app/features/product/services/cart.service';
+import { CartService } from 'src/app/features/cart/service/cart.service';
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
 })
-export class MainLayoutComponent implements OnInit {
+export class MainLayoutComponent{
   cartText!: number;
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {
-    this.subscribeToCartText();
-  }
-  
-  subscribeToCartText() {
-    this.cartService.getList().subscribe((response) => {
-      this.cartText = response.length;
-    });
-  }
 
 }

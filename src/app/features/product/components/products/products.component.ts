@@ -1,6 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { CartItem } from 'src/app/features/cart/models/cartItem';
+import { CartService } from 'src/app/features/cart/service/cart.service';
 import { CategoriesService } from 'src/app/features/category/services/categories.service';
 import { Category } from 'src/app/shared/models/category';
 import { Component } from '@angular/core';
@@ -8,7 +10,7 @@ import { Filters } from 'src/app/shared/models/filters';
 import { GetListOptionsType } from 'src/app/shared/models/get-list-options';
 import { Pagination } from 'src/app/shared/models/pagination';
 import { Products } from 'src/app/shared/models/product';
-import { ProductsService } from 'src/app/features/product/services/products.service';
+import { ProductsService } from '../../services/products.service';
 import { Supplier } from 'src/app/shared/models/supplier';
 import { SupplierServiceService } from 'src/app/shared/services/supplier-service.service';
 import { filter } from 'rxjs';
@@ -58,7 +60,8 @@ export class ProductsComponent {
     private router: Router,
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
-    private supliersService: SupplierServiceService
+    private supliersService: SupplierServiceService,
+    private cartservice: CartService
   ) {}
 
   ngOnInit(): void {
@@ -181,10 +184,8 @@ export class ProductsComponent {
   }
 
   addToCartClick(product: Products) {
-    console.log(
-      'ProductListComponentden sepete eklenmesi istenen ürün:',
-      product
-    );
+    let cartItem: CartItem = {product:product, quantity: 1};
+    this.cartservice.addState(cartItem);
   }
 }
 

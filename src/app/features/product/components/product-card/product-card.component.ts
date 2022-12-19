@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CartService } from '../../services/cart.service';
+import { CartService } from 'src/app/features/cart/service/cart.service';
 import { MainLayoutComponent } from 'src/app/shared/components/main-layout/main-layout.component';
 import { Products } from 'src/app/shared/models/product';
 import { ToastrService } from 'ngx-toastr';
@@ -25,10 +25,7 @@ export class ProductCardComponent {
   ) {}
 
   addToCartClick() {
-    this.cartService.add(this.product).subscribe(() => {
-      this.toastrService.success('Product added successfully');
-      this.mainLayout.subscribeToCartText();
-    });
-    //this.onAddToCartClick.emit(this.product);
+    
+    this.onAddToCartClick.emit(this.product);
   }
 }

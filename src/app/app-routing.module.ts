@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from './core/guards/auth.guard';
 import { CartComponent } from './features/cart/components/cart/cart.component';
 import { CategoryListPageComponent } from './features/category/pages/category-list-page/category-list-page.component';
 import { DashboardCategoriesPageComponent } from './features/category/pages/dashboard-categories-page/dashboard-categories-page.component';
@@ -40,6 +41,7 @@ const routes: Routes = [
         ],
       },
     ],
+    canActivate: [AuthGuard]
   },
 ];
 
